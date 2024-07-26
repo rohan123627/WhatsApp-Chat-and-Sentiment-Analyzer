@@ -5,14 +5,10 @@ def preprocess(data):
     messages=re.split(pattern,data)[1:]
     dates=re.findall(pattern,data)
     df=pd.DataFrame({'user_message':messages,'message_date':dates})
-    #df['message_date']=pd.to_datetime(df['message_date'],format='%m/%d/%y, %H:%M - ')
-
-    df['message_date'] = pd.to_datetime(df['message_date'], format='%m/%d/%y, %I:%M %p - ')
+    
+    df['message_date']=pd.to_datetime(df['message_date'],format='%m/%d/%y, %H:%M - ')
     df.rename(columns={'message_date': 'date'}, inplace=True)
-    #df['date'] = df['message_date'].dt.strftime('%m/%d/%y, %I:%M %p')
-    #df.drop(columns=['message_date'], inplace=True)
-    #df.rename(columns={'message_date':'date'},inplace=True)
-
+    
     users=[]
     messages=[]
     for message in df['user_message']:
@@ -27,7 +23,6 @@ def preprocess(data):
     df['message'] = messages
     df.drop(columns=['user_message'], inplace=True)
 
-    #df['date'] = pd.to_datetime(df['date'], format='%m/%d/%y, %I:%M %p')
 
     df['only_date']=df['date'].dt.date
     df['year'] = df['date'].dt.year
