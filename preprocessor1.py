@@ -17,14 +17,10 @@ def preprocess(data):
     
     # convert dates type
     try:
-        #df['message_date'] = pd.to_datetime(df['message_date'], format='%d/%m/%y, %H:%M - ')
-        df['message_date'] = pd.to_datetime(df['message_date'], format='%d/%m/%y, %I:%M %p- ')
+        df['message_date'] = pd.to_datetime(df['message_date'], format='%d/%m/%y, %H:%M - ')
     except:
-        #df['message_date'] = pd.to_datetime(df['message_date'], format='%m/%d/%y, %H:%M - ')
-        df['message_date'] = pd.to_datetime(df['message_date'], format='%d/%m/%y, %I:%M %p- ')
+        df['message_date'] = pd.to_datetime(df['message_date'], format='%m/%d/%y, %H:%M - ')
     
-    #df['date'] = df['message_date'].dt.strftime('%m/%d/%y, %I:%M %p')
-    #df.drop(columns=['message_date'], inplace=True)
     df.rename(columns={'message_date': 'date'}, inplace=True)
 
     users = []
@@ -51,8 +47,6 @@ def preprocess(data):
     
     # Remove columns of no use
     df.drop(columns=['user_message'], inplace=True)
-    
-    df['date'] = pd.to_datetime(df['date'], format='%m/%d/%y, %I:%M %p')
 
     # Extract date
     df['only_date'] = df['date'].dt.date
